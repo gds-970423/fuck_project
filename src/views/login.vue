@@ -21,7 +21,7 @@
         </el-form-item>
         <!-- 提交  重置 按钮 -->
         <el-form-item class="btns">
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
           <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -31,12 +31,12 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       // 这是登录表单的数据绑定对象
       loginForm: {
-        username: 'zs',
-        password: '123123'
+        username: '',
+        password: ''
       },
       // 表单验证规则
       loginFormRules: {
@@ -55,8 +55,23 @@ export default {
   },
   methods: {
     // 点击重置按钮，重置登录表单
-    resetLoginForm () {
+    resetLoginForm() {
       this.$refs.loginFormRef.resetFields()
+    },
+    //  登录 预验证
+    login() {
+      this.$refs.loginFormRef.validate(async valid => {
+        // false 判断，失败直接return出去
+        if (!valid) return
+        const { data: res } = await this.$http.post('login', this.loginForm)
+        // 登录失败 判断
+        if (res.meta.status !== 200) return this.$message.error('登陆失败!')
+        this.$message.success('登录成功!')
+        // 接受保存后端返回过来的token值
+        window.sessionStorage.setItem('token', res.data.token)
+        // 执行成功之后，编程式导航到home页面
+        this.$router.push('/home')
+      })
     }
   }
 }
