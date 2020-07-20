@@ -61,14 +61,11 @@ export default {
     //  登录 预验证
     login() {
       this.$refs.loginFormRef.validate(async valid => {
-        // false 判断，失败直接return出去
-        if (!valid) return
-        const { data: res } = await this.$http.post('login', this.loginForm)
-        // 登录失败 判断
-        if (res.meta.status !== 200) return this.$message.error('登陆失败!')
-        this.$message.success('登录成功!')
+        const data = await this.$http.post('login', this.loginForm)
+        // 返回数据为空的话，服务器数据出现错误
+        if (!data) return
         // 接受保存后端返回过来的token值
-        window.sessionStorage.setItem('token', res.data.token)
+        window.sessionStorage.setItem('token', data.token)
         // 执行成功之后，编程式导航到home页面
         this.$router.push('/home')
       })
