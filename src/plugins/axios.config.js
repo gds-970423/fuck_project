@@ -14,10 +14,20 @@ axios.interceptors.response.use(response => {
     //   必须保证两点:
     //   1. elemntUI 的 message 组件已经挂载到 vue 的原型中
     //   2. vue 的实例被赋值到全局 window 对象下的 vm 属性中
+    if (meta.status === 201) {
+      // 返回操作真正需要的数据
+      return res.data
+    }
     window.vm.$message.error(meta.msg)
     return null
   }
   // 返回操作真正需要的数据
   return res.data
+})
+// 设置请求拦截器
+axios.interceptors.request.use(config => {
+  // 为所有的请求添加上 token 请求头
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
 })
 Vue.prototype.$http = axios

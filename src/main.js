@@ -8,6 +8,7 @@ import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
 // 引入 axios 配置
 import './plugins/axios.config.js'
+import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
 
 window.vm = new Vue({
