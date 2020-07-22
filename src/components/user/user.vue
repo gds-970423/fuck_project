@@ -99,11 +99,38 @@
               placement="right-start"
               :enterable="false"
             >
-              <el-button type="warning" icon="el-icon-setting" :circle="true"></el-button>
+              <el-button
+                type="warning"
+                icon="el-icon-setting"
+                :circle="true"
+                @click="allocationRight(slotParams.row)"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分配角色对话框 -->
+      <el-dialog title="分配角色" :visible.sync="allocation" width="40%" @close="clearUserRight">
+        <div>
+          <p>当前的用户: {{userInfo.username}}</p>
+          <p>当前的角色: {{userInfo.role_name}}</p>
+          <p>
+            分配新角色:
+            <el-select v-model="seltctRightID" placeholder="请选择">
+              <el-option
+                v-for="item in rolesList"
+                :key="item.id"
+                :label="item.roleName"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </p>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="allocation = false">取 消</el-button>
+          <el-button type="primary" @click="changeUserRight">确 定</el-button>
+        </span>
+      </el-dialog>
       <!-- 分页部分 -->
       <div class="block">
         <el-pagination
@@ -163,6 +190,8 @@ export default {
       dialogVisible: false,
       // 修改用户框的状态值
       modifyDialogVisible: false,
+      // 分配角色对话框状态值
+      allocation: false,
       // 存放查询到的用户信息
       editFrom: {},
       // 添加from的表单数据
@@ -190,8 +219,13 @@ export default {
           { required: true, message: '请输入用户手机号', trigger: 'blur' },
           { validator: checkMobile, trigger: 'blur' }
         ]
-      }
-      // 修改信息的验证规则
+      },
+      // 保存需要分配权限的用户信息
+      userInfo: {},
+      // 存放获取到的角色列表
+      rolesList: [],
+      // 已选中的角色ID 值
+      seltctRightID: ''
     }
   },
   created() {
@@ -270,6 +304,29 @@ export default {
       this.getUserInfo()
       this.$message.success('删除成功')
       // 成功之后 重新加载页面
+    },
+    // 点击分配用户权利
+    async allocationRight(info) {
+      this.userInfo = info
+      // 获取展示角色的列表
+      this.rolesList = await this.$http.get('roles')
+      this.allocation = true
+    },
+    // 点击修改角色
+    async changeUserRight() {
+      // 先判断用户是否重新选择了角色
+      if (!this.seltctRightID) return this.$message.error('请选择要分配的角色')
+      await this.$http.put(`users/${this.userInfo.id}/role`, {
+        rid: this.seltctRightID
+      })
+      this.$message.success('分配角色成功!')
+      this.allocation = false
+      this.getUserInfo()
+    },
+    // 分配对话框关闭后 清除
+    clearUserRight() {
+      this.userInfo = {}
+      this.seltctRightID = ''
     }
   }
 }
