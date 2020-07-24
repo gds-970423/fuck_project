@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Tree, MessageBox, Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem, Card, Select, Option, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, Popconfirm, Tag } from 'element-ui'
+import { Cascader, Tree, MessageBox, Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem, Card, Select, Option, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, Popconfirm, Tag } from 'element-ui'
 // 按需暴露所需要的 element 组件
 Vue.use(Button)
 Vue.use(Form)
@@ -28,5 +28,6 @@ Vue.use(Dialog)
 Vue.use(Popconfirm)
 Vue.use(Tag)
 Vue.use(Tree)
+Vue.use(Cascader)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

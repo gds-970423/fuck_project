@@ -9,6 +9,9 @@ import './assets/fonts/iconfont.css'
 // 引入 axios 配置
 import './plugins/axios.config.js'
 import 'element-ui/lib/theme-chalk/index.css'
+// 导入第三方树形库
+import TreeTable from 'vue-table-with-tree-grid'
+Vue.component('tree-table', TreeTable)
 Vue.config.productionTip = false
 
 window.vm = new Vue({
