@@ -7,7 +7,9 @@ import Users from '../components/user/user.vue'
 import Rights from '../components/power/Rights.vue'
 import Roles from '../components/power/Roles.vue'
 import Cate from '../components/Goods/Cate.vue'
-import Goods from '../components/Goods/Goods.vue'
+import List from '../components/Goods/List.vue'
+import Params from '../components/Goods/Params.vue'
+import Add from '../components/Goods/Add.vue'
 
 Vue.use(VueRouter)
 
@@ -25,10 +27,11 @@ const router = new VueRouter({
         { path: '/rights', component: Rights },
         { path: '/roles', component: Roles },
         { path: '/categories', component: Cate },
-        { path: '/goods', component: Goods }
+        { path: '/goods', component: List },
+        { path: '/params', component: Params },
+        { path: '/goods/add', component: Add }
       ]
     }
-
   ]
 })
 // 添加路由导航守卫

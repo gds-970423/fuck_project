@@ -19,3 +19,6 @@ html,body,#app{
 .tree-table{
     margin-top: 15px;
 }
+.ql-editor {
+    min-height: 300px;
+}

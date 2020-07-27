@@ -11,6 +11,14 @@ import './plugins/axios.config.js'
 import 'element-ui/lib/theme-chalk/index.css'
 // 导入第三方树形库
 import TreeTable from 'vue-table-with-tree-grid'
+// 导入时间过滤器
+import './filter/Filter'
+// 导入富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
 Vue.component('tree-table', TreeTable)
 Vue.config.productionTip = false
 
