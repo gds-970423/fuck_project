@@ -37,10 +37,14 @@ import {
   Tag,
   CheckboxGroup,
   Checkbox,
-  Upload
+  Upload,
+  Timeline,
+  TimelineItem
 } from 'element-ui'
 // 按需暴露所需要的 element 组件
 Vue.use(Button)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
